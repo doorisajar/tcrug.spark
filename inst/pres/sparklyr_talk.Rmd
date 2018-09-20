@@ -28,6 +28,7 @@ library(dbplyr)
     - lots of solar
     - Utilities: FPL, Gulf
     - Energy trading
+    
 - We're hiring! 
 
 ---
@@ -35,6 +36,77 @@ library(dbplyr)
 # Why Spark?
 
 - [Spark](https://spark.apache.org/) is a distributed computing framework
-- 
+
+- If your data won't fit in memory...
+    - Did I mention we have more than 10,000 wind turbines?
 
 ---
+
+# Why `sparklyr`?
+
+- We have custom models that are already implemented in `R`
+
+- We're already comfortable working in `R` 
+
+- We want to use `R` package functions that may not exist in other languages
+
+---
+
+# Getting Spark
+
+- Install `sparklyr`
+    - `install.packages('sparklyr')`
+
+- Install Spark:
+    - `brew install apache-spark`
+    - Download it from `spark.apache.org`
+    - `sparklyr::spark_install(...)`
+
+- Amazon Web Services Elastic MapReduce (AWS EMR) clusters can be preconfigured to include Spark by default
+
+---
+
+# Getting Spark working
+
+Create a Spark configuration file:
+
+```yaml
+config_name:
+  spark.dynamicAllocation.enabled: true
+  spark.yarn.executor.memory: ?
+  spark.yarn.executor.memoryOverhead: ?
+```
+
+Sometimes you'll need extra options, especially when working on AWS:
+
+```yaml
+  spark.hadoop.fs.s3a.access.key:                           
+  spark.hadoop.fs.s3a.secret.key: 
+  spark.hadoop.fs.s3a.endpoint: s3.us-east-1.amazonaws.com
+  spark.driver.extraJavaOptions: -Dcom.amazonaws.services.s3.enableV4=true
+  spark.executor.extraJavaOptions: -Dcom.amazonaws.services.s3.enableV4=true
+  sparklyr.shell.driver-java-options: -Dcom.amazonaws.services.s3.enableV4=true
+```
+
+---
+
+# The Spark session
+
+```r
+conf <- spark_config("some/path/config.yml")
+
+sc <- spark_connect(master = "yarn",
+                    spark_home = "/usr/lib/spark",
+                    config = conf)
+
+```
+
+`master` can be: 
+    - `local` for prototyping
+    - `yarn` for use with a Hadoop cluster managed by the YARN scheduler (standard for AWS EMR)
+
+`spark_home` is wherever you installed Spark, or `/usr/lib/spark` if on AWS. 
+
+---
+
+# Demo time!
