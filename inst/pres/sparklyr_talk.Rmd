@@ -1,0 +1,40 @@
+---
+title: "sparklyr"
+subtitle: "Distributed Computing with R and Spark"
+author: "Raja Doake"
+date: "2018-09-20"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+    css: [default, metropolis, metropolis-fonts]
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(sparklyr)
+library(dplyr)
+library(sparklyr)
+library(dbplyr)
+```
+
+# WindLogics?
+
+- R&D subsidiary of [NextEra Energy](http://nexteraenergy.com/)
+    - over 10,000 wind turbines
+    - lots of solar
+    - Utilities: FPL, Gulf
+    - Energy trading
+- We're hiring! 
+
+---
+
+# Why Spark?
+
+- [Spark](https://spark.apache.org/) is a distributed computing framework
+- 
+
+---
