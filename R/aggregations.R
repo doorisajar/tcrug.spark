@@ -19,5 +19,3 @@ mean_departure_delay <- function(sdf, group_vars = UNIQUE_CARRIER) {
     summarise(MEAN_DEP_DELAY = mean(DEP_DELAY, na.rm = TRUE))
 
 }
-
-# invoke example?

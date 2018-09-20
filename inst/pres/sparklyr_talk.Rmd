@@ -75,6 +75,7 @@ config_name:
   spark.dynamicAllocation.enabled: true
   spark.yarn.executor.memory: ?
   spark.yarn.executor.memoryOverhead: ?
+  sparklyr.log.console: true
 ```
 
 Sometimes you'll need extra options, especially when working on AWS:
@@ -116,11 +117,15 @@ sc <- spark_connect(master = "yarn",
 ```
 
 `master` can be: 
-    - `local` for prototyping
-    - `yarn` for use with a Hadoop cluster managed by the YARN scheduler (standard for AWS EMR)
+  - `local` for prototyping
+  - `yarn` for use with a Hadoop cluster managed by the YARN scheduler (standard for AWS EMR)
 
 `spark_home` is wherever you installed Spark, or `/usr/lib/spark` if on AWS. 
 
 ---
 
 # Demo time!
+
+Thanks to Bruno Rodrigues for pointing me to a large public dataset!
+
+http://www.brodrigues.co/blog/2018-02-16-importing_30gb_of_data/
