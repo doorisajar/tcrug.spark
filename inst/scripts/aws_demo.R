@@ -1,7 +1,6 @@
 library(dplyr)
 library(sparklyr)
 library(dbplyr)
-library(nycflights13)
 
 # load Spark configuration and initiate spark connection
 conf <- spark_config("~/sc.yml")
@@ -10,29 +9,34 @@ sc <- spark_connect(master = "yarn",
                     spark_home = "/usr/lib/spark",
                     config = conf)
 
+# get some data! (I copied this to AWS S3 beforehand)
+# https://packages.revolutionanalytics.com/datasets/AirOnTime87to12/
+
 # create a Spark DataFrame
-flights_sdf <- copy_to(sc, select(flights, -time_hour), "flights_sdf", overwrite = TRUE)
+flights <- spark_read_csv(sc, "flights", "s3a://wl-applied-math-dev/rdoake/tcrug/*.csv.gz")
+
+# while this runs, check out the Spark UI! on AWS EMR, this is at:
+# http://ec2-*.compute-*.amazonaws.com:18080/?showIncomplete=true
 
 # inspect our new DataFrame
-class(flights_sdf)
-str(flights_sdf)
+class(flights)
+str(flights)
 
-sdf_nrow(flights_sdf)
-sdf_describe(flights_sdf)
+sdf_nrow(flights)
 
 # perform some operations
-flights_sdf %>%
-  group_by(carrier) %>%
-  summarise(mean_dep_delay = mean(dep_delay, na.rm = TRUE))
+flights %>%
+  group_by(UNIQUE_CARRIER) %>%
+  summarise(MEAN_DEP_DELAY = mean(DEP_DELAY, na.rm = TRUE))
 
 # try a package function
-mean_departure_delay(flights_sdf)
+mean_departure_delay(flights)
 
-mean_departure_delay(flights_sdf, month)
+mean_departure_delay(flights, MONTH)
 
 # try specialized R functions
-flights_sdf %>%
-  mutate(run_length_encoding = rle(carrier))
+flights %>%
+  mutate(run_length_encoding = rle(UNIQUE_CARRIER))
 
 # Error: org.apache.spark.sql.AnalysisException: Undefined function: 'RLE'. This
 # function is neither a registered temporary function nor a permanent function

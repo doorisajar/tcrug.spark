@@ -87,7 +87,21 @@ Sometimes you'll need extra options, especially when working on AWS:
   spark.executor.extraJavaOptions: -Dcom.amazonaws.services.s3.enableV4=true
   sparklyr.shell.driver-java-options: -Dcom.amazonaws.services.s3.enableV4=true
 ```
+---
 
+# Getting Spark working, part 2
+
+I've skipped some steps here since there's a whole other talk tonight on setting up R / RStudio on AWS! 
+
+- I already had an Amazon Machine Image created with R, RStudio, and various packages installed
+- Port 8787 (or some other port you specify) needs to be open so you can access the RStudio UI through a browser
+- If using AWS EMR, you need to create a user for RStudio that has a password (by default AWS instances are only accessible via keypair)
+- That user needs to have their own Hadoop scratch directory and permissions for it. So for my user `rstudio`:
+
+```bash
+sudo -u hdfs hadoop fs -mkdir -p /user/rstudio
+sudo -u hdfs hadoop fs -chown rstudio /user/rstudio
+```
 ---
 
 # The Spark session

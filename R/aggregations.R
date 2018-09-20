@@ -10,13 +10,13 @@
 #'
 #' @export
 #'
-mean_departure_delay <- function(sdf, group_vars = carrier) {
+mean_departure_delay <- function(sdf, group_vars = UNIQUE_CARRIER) {
 
   qt <- enquo(group_vars)
 
   sdf %>%
     group_by(UQ(qt)) %>%
-    summarise(mean_dep_delay = mean(dep_delay, na.rm = TRUE))
+    summarise(MEAN_DEP_DELAY = mean(DEP_DELAY, na.rm = TRUE))
 
 }
 
