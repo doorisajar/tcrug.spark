@@ -4,4 +4,4 @@ I gave this talk on `sparklyr` at the 2018-09-20 meeting of the Twin Cities R Us
 
 I gave an intro from the slides in `inst/pres` first, then ran through the demo script `inst/scripts/aws_demo.R` on a live AWS EMR cluster. 
 
-I'll update this README with a link to the talk video once that's up!
+You can see the talk here: https://www.youtube.com/watch?v=xNpIyRzsPew
