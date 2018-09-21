@@ -83,6 +83,8 @@ flights %>%
 # https://spark.apache.org/docs/latest/api/sql/index.html
 
 # that's still a LOT of power & flexibility! but if you need more, there's spark_apply!
+# NOTE: each YYYY-MM partition is ~450k rows, so to handle this operation you will need
+# a LOT of memory!
 states_by_month <- flights %>%
   group_by(YEAR, MONTH) %>%
   spark_apply(state_pairs) %>%
