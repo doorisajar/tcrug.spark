@@ -12,8 +12,10 @@
 state_pairs <- function(x) {
 
   x %<>%
-    mutate(state_pairs = paste(ORIGIN_STATE_ABR, DEST_STATE_ABR)) %>%
-    select(state_pairs) %>%
+    mutate(STATE_PAIRS = paste(ORIGIN_STATE_ABR, DEST_STATE_ABR)) %>%
+    select(STATE_PAIRS) %>%
     table
+
+  as.data.frame(x[1:5, ])
 
 }
